@@ -9,4 +9,28 @@ The schema is designed to have meaningful information in different tables. These
 # Example queries and results for song play analysis.
 
 A simple analysis like this can help Spotify find which gender listens more to their songs
+
 SELECT gender, count(*) FROM users GROUP BY gender;
+
+# how to run the Python scripts
+
+ 1. Go To Tabs>Launcher
+ 2. From Launcher Dashboard open Terminal and run>python create_tables.py.
+ 3. To Load data into tables from logs run > python etl.py from terminal.
+
+# An explanation of the files in the repository.
+
+## create_tables.py
+Main python program that creates the postgress database and calls the ETL functions and SQL queries.
+
+## etl.ipynb
+A jupyter notebook that helps to build the process for ETL.
+
+## etl.py
+Main etl program that identified files of songs and logs and loads the data into tables.
+
+## sql_queries.py
+Creates postgress database tables for creating tables,inserting data and searching data.
+
+## test.ipynb
+Test script to verify whether data has loaded correctly.

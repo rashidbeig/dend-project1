@@ -6,7 +6,12 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    # open song file
+ 
+    '''
+    Reads data from json songs data and inserts the records into a tables by converting 
+    them into a list.
+    '''
+    
     df = pd.read_json(filepath, lines=True)
 
     # insert song record
@@ -19,8 +24,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    # open log file
-        #Rashid :convert_dates function remove bigint error
+    '''
+    Reads data from json logs data and inserts the records into a tables by converting 
+    them into a list.
+    '''
+    #Rashid :convert_dates function remove bigint error
+    
     df = pd.read_json(filepath, lines=True,convert_dates=['ts'])
 
     # filter by NextSong action
@@ -57,11 +66,19 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index, row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
+        songplay_data = (index, row.ts, row.userId, row.level, songid, artistid,
+                         row.sessionId, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
 
 
 def process_data(cur, conn, filepath, func):
+    
+    '''
+    
+    Takes a filepath and based on name identifies which function to use.
+    
+    '''
+    
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -81,6 +98,13 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    
+    '''
+    
+    Main function to process songs and logs data and load into tables.
+    
+    '''
+    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
     
